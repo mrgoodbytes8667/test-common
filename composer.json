@@ -1,8 +1,9 @@
 {
     "name": "mrgoodbytes8667/test-common",
     "type": "library",
+    "description": "Common helper traits for PHPUnit with Symfony",
     "require": {
-        "php": "^8.0",
+        "php": "^7.4 | ^8.0",
         "doctrine/common": "^3.0",
         "illuminate/collections": "^8.0",
         "mrgoodbytes8667/enum-serializer-bundle": "^1.2.3",
