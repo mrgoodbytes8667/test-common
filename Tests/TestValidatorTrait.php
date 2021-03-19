@@ -19,7 +19,7 @@ trait TestValidatorTrait
     /**
      * @var ValidatorInterface|RecursiveValidator
      */
-    private $validator;
+    protected $validator;
 
     /**
      * @return RecursiveValidator|ValidatorInterface
