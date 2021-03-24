@@ -21,7 +21,7 @@ trait TestParamConverterTrait
      * @param bool $optional
      * @return ParamConverter
      */
-    public function createConfiguration($class = null, $name = null, bool $optional = false)
+    public function createConfiguration($class = null, $name = null, bool $optional = false, array $options = [])
     {
         $config = $this
             ->getMockBuilder(ParamConverter::class)
@@ -40,6 +40,9 @@ trait TestParamConverterTrait
         }
         $config->method('isOptional')
             ->willReturn($optional);
+
+        $config->method('getOptions')
+            ->willReturn($options);
 
         return $config;
     }
