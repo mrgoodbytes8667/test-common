@@ -4,7 +4,7 @@
 namespace Bytes\Tests\Common\MockHttpClient;
 
 
-use Symfony\Component\HttpClient\Response\CommonResponseTrait;
+use Bytes\Tests\Common\CommonResponseTrait;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
