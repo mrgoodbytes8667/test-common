@@ -2,6 +2,7 @@
     "name": "mrgoodbytes8667/test-common",
     "type": "library",
     "description": "Common helper traits for PHPUnit with Symfony",
+    "license": "CC-BY-NC-4.0",
     "require": {
         "php": "^7.4 | ^8.0",
         "ext-json": "*",
