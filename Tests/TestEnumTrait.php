@@ -10,6 +10,8 @@ use ReflectionException;
 /**
  * Trait TestEnumTrait
  * @package Bytes\Tests\Common
+ *
+ * @method assertIsArray($actual, string $message = '')
  */
 trait TestEnumTrait
 {
@@ -34,5 +36,14 @@ trait TestEnumTrait
         }
 
         return $definition;
+    }
+
+    /**
+     * @param Enum|string $class
+     */
+    public function coverEnum(string $class)
+    {
+        $this->assertIsArray($class::getValues());
+        $this->assertIsArray($class::getLabels());
     }
 }
