@@ -7,17 +7,22 @@ namespace Bytes\Tests\Common;
 use Bytes\EnumSerializerBundle\Serializer\Normalizer\EnumNormalizer;
 use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
+use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
 use Symfony\Component\PropertyInfo\Extractor\ReflectionExtractor;
 use Symfony\Component\PropertyInfo\Extractor\SerializerExtractor;
 use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
+use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Encoder\XmlEncoder;
 use Symfony\Component\Serializer\Mapping\ClassDiscriminatorFromClassMetadata;
+use Symfony\Component\Serializer\Mapping\ClassDiscriminatorResolverInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
+use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
+use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
 use Symfony\Component\Serializer\Normalizer\ConstraintViolationListNormalizer;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
@@ -36,6 +41,46 @@ use Symfony\Component\Serializer\Serializer;
  */
 trait TestSerializerTrait
 {
+    /**
+     * @var ClassMetadataFactoryInterface
+     */
+    protected $classMetadataFactory = null;
+
+    /**
+     * @var NameConverterInterface
+     */
+    protected $metadataAwareNameConverter = null;
+
+    /**
+     * @var SerializerExtractor
+     */
+    protected $serializerExtractor = null;
+
+    /**
+     * @var PhpDocExtractor
+     */
+    protected $phpDocExtractor = null;
+
+    /**
+     * @var ReflectionExtractor
+     */
+    protected $reflectionExtractor = null;
+
+    /**
+     * @var PropertyTypeExtractorInterface
+     */
+    protected $propertyInfo = null;
+
+    /**
+     * @var PropertyAccessorInterface
+     */
+    protected $propertyAccessor = null;
+
+    /**
+     * @var ClassDiscriminatorResolverInterface
+     */
+    protected $classDiscriminatorFromClassMetadata = null;
+
     /**
      * @param bool $includeObjectNormalizer
      * @param array $prependNormalizers
@@ -72,27 +117,9 @@ trait TestSerializerTrait
     protected function getNormalizers(bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [])
     {
         $normalizers = $prependNormalizers;
-        $classMetadataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
-        $metadataAwareNameConverter = new MetadataAwareNameConverter($classMetadataFactory);
+        $this->setupObjectNormalizerParts();
 
-        $serializerExtractor = new SerializerExtractor($classMetadataFactory);
-        $phpDocExtractor = new PhpDocExtractor();
-        $reflectionExtractor = new ReflectionExtractor();
-
-        // list: SerializerExtractor, ReflectionExtractor, DoctrineExtractor
-        // type: Doctrine, PhpDoc, Reflection
-        // description: PhpDoc
-        // access: Doctrine, Reflection
-        // init: Reflection
-        $propertyInfo = new PropertyInfoExtractor(
-            [$serializerExtractor, $reflectionExtractor],
-            [$phpDocExtractor, $reflectionExtractor],
-            [$phpDocExtractor],
-            [$reflectionExtractor],
-            [$reflectionExtractor]
-        );
-
-        $objectNormalizer = new ObjectNormalizer($classMetadataFactory, $metadataAwareNameConverter, new PropertyAccessor(), $propertyInfo, new ClassDiscriminatorFromClassMetadata($classMetadataFactory));
+        $objectNormalizer = new ObjectNormalizer($this->classMetadataFactory, $this->metadataAwareNameConverter, $this->propertyAccessor, $this->propertyInfo, $this->classDiscriminatorFromClassMetadata);
         $normalizers[] = new EnumNormalizer();
         foreach ($appendNormalizers as $normalizer) {
             $normalizers[] = $normalizer;
@@ -101,5 +128,37 @@ trait TestSerializerTrait
             $normalizers[] = $objectNormalizer;
         }
         return $normalizers;
+    }
+
+    /**
+     * @param ClassMetadataFactoryInterface|null $classMetadataFactory
+     * @param NameConverterInterface|null $nameConverter
+     * @param PropertyTypeExtractorInterface|null $propertyTypeExtractor
+     * @param ClassDiscriminatorResolverInterface|null $classDiscriminatorResolver
+     */
+    protected function setupObjectNormalizerParts(ClassMetadataFactoryInterface $classMetadataFactory = null, NameConverterInterface $nameConverter = null, PropertyTypeExtractorInterface $propertyTypeExtractor = null, ClassDiscriminatorResolverInterface $classDiscriminatorResolver = null)
+    {
+        $this->classMetadataFactory = $classMetadataFactory ?? $this->classMetadataFactory ?? new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $this->metadataAwareNameConverter = $nameConverter ?? $this->nameConverter ?? new MetadataAwareNameConverter($this->classMetadataFactory);
+
+        $this->serializerExtractor = new SerializerExtractor($this->classMetadataFactory);
+        $this->phpDocExtractor = new PhpDocExtractor();
+        $this->reflectionExtractor = new ReflectionExtractor();
+
+        // list: SerializerExtractor, ReflectionExtractor, DoctrineExtractor
+        // type: Doctrine, PhpDoc, Reflection
+        // description: PhpDoc
+        // access: Doctrine, Reflection
+        // init: Reflection
+        $this->propertyInfo = $propertyTypeExtractor ?? $this->propertyTypeExtractor ?? new PropertyInfoExtractor(
+            [$this->serializerExtractor, $this->reflectionExtractor],
+            [$this->phpDocExtractor, $this->reflectionExtractor],
+            [$this->phpDocExtractor],
+            [$this->reflectionExtractor],
+            [$this->reflectionExtractor]
+        );
+
+        $this->propertyAccessor = new PropertyAccessor();
+        $this->classDiscriminatorFromClassMetadata = $classDiscriminatorResolver ?? $this->classDiscriminatorResolver ?? new ClassDiscriminatorFromClassMetadata($this->classMetadataFactory);
     }
 }
