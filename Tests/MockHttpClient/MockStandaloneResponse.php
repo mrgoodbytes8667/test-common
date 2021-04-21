@@ -77,7 +77,7 @@ class MockStandaloneResponse implements ResponseInterface
      */
     public function getHeaders(bool $throw = true): array
     {
-        // TODO: Implement getHeaders() method.
+        return [];
     }
 
     /**
