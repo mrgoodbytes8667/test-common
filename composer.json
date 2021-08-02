@@ -4,7 +4,7 @@
     "description": "Common helper traits for PHPUnit with Symfony",
     "license": "CC-BY-NC-4.0",
     "require": {
-        "php": "^7.4 | ^8.0",
+        "php": "^8.0",
         "ext-json": "*",
         "doctrine/common": "^3.0",
         "illuminate/collections": "^8.0",
