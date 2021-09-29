@@ -11,11 +11,11 @@
         "mrgoodbytes8667/enum-serializer-bundle": "^1.2.3",
         "phpdocumentor/reflection-docblock": "^5.2",
         "phpunit/phpunit": "*",
-        "symfony/http-client": "^5.2",
-        "symfony/phpunit-bridge": "^5.2",
-        "symfony/property-info": "^5.2",
-        "symfony/validator": "^5.2",
-        "symfony/var-dumper": "^5.2"
+        "symfony/http-client": "^5.2 | ^6.0",
+        "symfony/phpunit-bridge": "^5.2 | ^6.0",
+        "symfony/property-info": "^5.2 | ^6.0",
+        "symfony/validator": "^5.2 | ^6.0",
+        "symfony/var-dumper": "^5.2 | ^6.0"
     },
     "authors": [
         {

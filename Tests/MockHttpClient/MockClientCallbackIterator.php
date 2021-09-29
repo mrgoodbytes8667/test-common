@@ -36,7 +36,7 @@ abstract class MockClientCallbackIterator implements Iterator
      * @param mixed $array
      * @return $this
      */
-    public function setArray($array): self
+    public function setArray($array): static
     {
         $this->array = $array;
         return $this;
@@ -46,7 +46,7 @@ abstract class MockClientCallbackIterator implements Iterator
      * @param mixed $value
      * @return $this
      */
-    public function add($value): self
+    public function add($value): static
     {
         $this->array[] = $value;
         return $this;
