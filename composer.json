@@ -39,11 +39,5 @@
         "psr-4": {
             "Bytes\\Tests\\Common\\": "Tests/"
         }
-    },
-    "minimum-stability": "dev",
-    "extra": {
-        "branch-alias": {
-            "dev-symfony5.4": "0.1.x-dev"
-        }
     }
 }
