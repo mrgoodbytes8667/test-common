@@ -41,40 +41,12 @@ use Symfony\Component\Serializer\Serializer;
  */
 trait TestSerializerTrait
 {
-    /**
-     * @var ClassMetadataFactoryInterface
-     */
-    protected $classMetadataFactory = null;
+    use TestExtractorTrait;
 
     /**
      * @var NameConverterInterface
      */
     protected $metadataAwareNameConverter = null;
-
-    /**
-     * @var SerializerExtractor
-     */
-    protected $serializerExtractor = null;
-
-    /**
-     * @var PhpDocExtractor
-     */
-    protected $phpDocExtractor = null;
-
-    /**
-     * @var ReflectionExtractor
-     */
-    protected $reflectionExtractor = null;
-
-    /**
-     * @var PropertyTypeExtractorInterface
-     */
-    protected $propertyInfo = null;
-
-    /**
-     * @var PropertyAccessorInterface
-     */
-    protected $propertyAccessor = null;
 
     /**
      * @var ClassDiscriminatorResolverInterface
@@ -138,27 +110,10 @@ trait TestSerializerTrait
      */
     protected function setupObjectNormalizerParts(ClassMetadataFactoryInterface $classMetadataFactory = null, NameConverterInterface $nameConverter = null, PropertyTypeExtractorInterface $propertyTypeExtractor = null, ClassDiscriminatorResolverInterface $classDiscriminatorResolver = null)
     {
-        $this->classMetadataFactory = $classMetadataFactory ?? $this->classMetadataFactory ?? new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $this->setupExtractorParts($classMetadataFactory, $propertyTypeExtractor);
+
         $this->metadataAwareNameConverter = $nameConverter ?? $this->nameConverter ?? new MetadataAwareNameConverter($this->classMetadataFactory);
 
-        $this->serializerExtractor = new SerializerExtractor($this->classMetadataFactory);
-        $this->phpDocExtractor = new PhpDocExtractor();
-        $this->reflectionExtractor = new ReflectionExtractor();
-
-        // list: SerializerExtractor, ReflectionExtractor, DoctrineExtractor
-        // type: Doctrine, PhpDoc, Reflection
-        // description: PhpDoc
-        // access: Doctrine, Reflection
-        // init: Reflection
-        $this->propertyInfo = $propertyTypeExtractor ?? $this->propertyTypeExtractor ?? new PropertyInfoExtractor(
-            [$this->serializerExtractor, $this->reflectionExtractor],
-            [$this->phpDocExtractor, $this->reflectionExtractor],
-            [$this->phpDocExtractor],
-            [$this->reflectionExtractor],
-            [$this->reflectionExtractor]
-        );
-
-        $this->propertyAccessor = new PropertyAccessor();
         $this->classDiscriminatorFromClassMetadata = $classDiscriminatorResolver ?? $this->classDiscriminatorResolver ?? new ClassDiscriminatorFromClassMetadata($this->classMetadataFactory);
     }
 }
