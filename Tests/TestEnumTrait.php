@@ -43,7 +43,7 @@ trait TestEnumTrait
      */
     public function coverEnum(string $class)
     {
-        $this->assertIsArray($class::getValues());
-        $this->assertIsArray($class::getLabels());
+        $this->assertIsArray($class::toValues());
+        $this->assertIsArray($class::toLabels());
     }
 }
