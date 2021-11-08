@@ -6,7 +6,6 @@ namespace Bytes\Tests\Common\Constraint;
 
 use DateInterval;
 use Exception;
-use Illuminate\Support\Str;
 use InvalidArgumentException;
 use PHPUnit\Framework\Constraint\Constraint;
 
@@ -130,6 +129,6 @@ class DateIntervalSame extends Constraint
      */
     protected function pluralize(int $number, string $string)
     {
-        return $number === 1 ? Str::singular($string) : Str::plural($string);
+        return $number . ($number !== 1 ? 's' : '');
     }
 }
