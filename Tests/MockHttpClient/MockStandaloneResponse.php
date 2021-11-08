@@ -151,7 +151,7 @@ class MockStandaloneResponse implements ResponseInterface
      * @return array|mixed|null An array of all available info, or one of them when $type is
      *                          provided, or null when an unsupported type is requested
      */
-    public function getInfo(string $type = null)
+    public function getInfo(string $type = null): mixed
     {
         if (!array_key_exists($type, $this->info)) {
             return null;
