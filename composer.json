@@ -39,5 +39,6 @@
         "psr-4": {
             "Bytes\\Tests\\Common\\": "Tests/"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
