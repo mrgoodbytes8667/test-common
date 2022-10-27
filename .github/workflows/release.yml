@@ -28,8 +28,3 @@ jobs:
           release_name: ${{ github.ref }}
           draft: true
           prerelease: false
-          body: |
-            Description
-            ### Features
-            ### Changes
-            ### Bugs
