@@ -4,11 +4,11 @@
     "description": "Common helper traits for PHPUnit with Symfony",
     "license": "CC-BY-NC-4.0",
     "require": {
-        "php": "^8.0",
+        "php": "^8.1",
         "ext-json": "*",
         "doctrine/common": "^3.0",
         "illuminate/collections": "^8.0",
-        "mrgoodbytes8667/enum-serializer-bundle": "^1.2.3 | ^2.0 | ^3.0",
+        "mrgoodbytes8667/enum-serializer-bundle": "^3.1 | ^4.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "phpunit/phpunit": "*",
         "symfony/http-client": "^5.2 | ^6.0",
