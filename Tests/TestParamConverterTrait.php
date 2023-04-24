@@ -6,6 +6,8 @@ namespace Bytes\Tests\Common;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
+trigger_deprecation('mrgoodbytes8667/test-common', '0.1.2', 'Since 0.1.2, switch to using Value Resolvers.');
+
 /**
  * Trait TestParamConverterTrait
  * @package Bytes\Tests\Common
