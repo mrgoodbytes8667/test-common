@@ -8,14 +8,14 @@
         "ext-json": "*",
         "doctrine/common": "^3.0",
         "illuminate/collections": "^8.0 | ^9.0 | ^10.0",
-        "mrgoodbytes8667/enum-serializer-bundle": "^3.1 | ^4.0",
+        "mrgoodbytes8667/enum-serializer-bundle": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.2",
         "phpunit/phpunit": "*",
-        "symfony/http-client": "^5.2 | ^6.0",
-        "symfony/phpunit-bridge": "^5.2 | ^6.0",
-        "symfony/property-info": "^5.2 | ^6.0",
-        "symfony/validator": "^5.2 | ^6.0",
-        "symfony/var-dumper": "^5.2 | ^6.0"
+        "symfony/http-client": "^6.2",
+        "symfony/phpunit-bridge": "^6.2",
+        "symfony/property-info": "^6.2",
+        "symfony/validator": "^6.2",
+        "symfony/var-dumper": "^6.2"
     },
     "authors": [
         {
