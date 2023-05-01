@@ -6,6 +6,7 @@ namespace Bytes\Tests\Common;
 
 use Bytes\EnumSerializerBundle\Serializer\Normalizer\EnumNormalizer;
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -29,7 +30,9 @@ use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateIntervalNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeZoneNormalizer;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\JsonSerializableNormalizer;
+use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Component\Serializer\Normalizer\ProblemNormalizer;
 use Symfony\Component\Serializer\Normalizer\UnwrappingDenormalizer;
@@ -54,13 +57,22 @@ trait TestSerializerTrait
     protected $classDiscriminatorFromClassMetadata = null;
 
     /**
+     * @var ArrayCollection<class-string<NormalizerInterface|DenormalizerInterface>, NormalizerInterface|DenormalizerInterface>|null
+     */
+    protected ?ArrayCollection $normalizers = null;
+
+    /**
      * @param bool $includeObjectNormalizer
-     * @param array $prependNormalizers
-     * @param array $appendNormalizers
+     * @param array<NormalizerInterface|DenormalizerInterface> $prependNormalizers
+     * @param array<NormalizerInterface|DenormalizerInterface> $appendNormalizers
+     * @param bool $includeEnumNormalizer
      * @return Serializer
      */
-    protected function createSerializer(bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [])
+    protected function createSerializer(bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [], bool $includeEnumNormalizer = true)
     {
+        if(is_null($this->normalizers)) {
+            $this->normalizers = new ArrayCollection();
+        }
         if (empty($appendNormalizers)) {
             $appendNormalizers = [
                 new ProblemNormalizer(),
@@ -75,31 +87,56 @@ trait TestSerializerTrait
         }
 
         $encoders = [new XmlEncoder(), new JsonEncoder(), new CsvEncoder()];
-        $normalizers = $this->getNormalizers($includeObjectNormalizer, array_merge($prependNormalizers, [new UnwrappingDenormalizer()]), $appendNormalizers);
+        $normalizers = $this->getNormalizers($includeObjectNormalizer, array_merge($prependNormalizers, [new UnwrappingDenormalizer()]), $appendNormalizers, includeEnumNormalizer: $includeEnumNormalizer);
 
         return new Serializer($normalizers, $encoders);
     }
 
     /**
      * @param bool $includeObjectNormalizer
-     * @param array $prependNormalizers
-     * @param array $appendNormalizers
-     * @return array
+     * @param array<NormalizerInterface|DenormalizerInterface> $prependNormalizers
+     * @param array<NormalizerInterface|DenormalizerInterface> $appendNormalizers
+     * @param bool $includeEnumNormalizer
+     * @return array<NormalizerInterface|DenormalizerInterface>
      */
-    protected function getNormalizers(bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [])
+    protected function getNormalizers(bool $includeObjectNormalizer = true, array $prependNormalizers = [], array $appendNormalizers = [], bool $includeEnumNormalizer = true)
     {
-        $normalizers = $prependNormalizers;
+        if(is_null($this->normalizers)) {
+            $this->normalizers = new ArrayCollection();
+        }
+        foreach ($prependNormalizers as $normalizer) {
+            $this->addNormalizer($normalizer);
+        }
         $this->setupObjectNormalizerParts();
 
-        $objectNormalizer = new ObjectNormalizer($this->classMetadataFactory, $this->metadataAwareNameConverter, $this->propertyAccessor, $this->propertyInfo, $this->classDiscriminatorFromClassMetadata);
-        $normalizers[] = new EnumNormalizer();
+        $objectNormalizer = new ObjectNormalizer(classMetadataFactory: $this->classMetadataFactory,
+            nameConverter: $this->metadataAwareNameConverter, propertyAccessor: $this->propertyAccessor,
+            propertyTypeExtractor: $this->propertyInfo, classDiscriminatorResolver: $this->classDiscriminatorFromClassMetadata);
+        if($includeEnumNormalizer) {
+            $this->addNormalizer(new EnumNormalizer());
+        }
         foreach ($appendNormalizers as $normalizer) {
-            $normalizers[] = $normalizer;
+            $this->addNormalizer($normalizer);
         }
         if ($includeObjectNormalizer) {
-            $normalizers[] = $objectNormalizer;
+            $this->addNormalizer($objectNormalizer);
         }
-        return $normalizers;
+        return array_values($this->normalizers->toArray());
+    }
+
+    /**
+     * @param NormalizerInterface|DenormalizerInterface $normalizer
+     * @return $this
+     */
+    protected function addNormalizer(NormalizerInterface|DenormalizerInterface $normalizer): self {
+        if(is_null($this->normalizers)) {
+            $this->normalizers = new ArrayCollection();
+        }
+        if(!$this->normalizers->containsKey($normalizer::class)) {
+            $this->normalizers->set($normalizer::class, $normalizer);
+        }
+
+        return $this;
     }
 
     /**
