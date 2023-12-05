@@ -2,7 +2,6 @@
 
 namespace Bytes\Tests\Common;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Symfony\Component\PropertyAccess\PropertyAccessor;
 use Symfony\Component\PropertyAccess\PropertyAccessorInterface;
 use Symfony\Component\PropertyInfo\Extractor\PhpDocExtractor;
@@ -12,7 +11,7 @@ use Symfony\Component\PropertyInfo\PropertyInfoExtractor;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 
 trait TestExtractorTrait
 {
@@ -52,7 +51,7 @@ trait TestExtractorTrait
      */
     protected function setupExtractorParts(ClassMetadataFactoryInterface $classMetadataFactory = null, PropertyTypeExtractorInterface $propertyTypeExtractor = null)
     {
-        $this->classMetadataFactory = $classMetadataFactory ?? $this->classMetadataFactory ?? new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $this->classMetadataFactory = $classMetadataFactory ?? $this->classMetadataFactory ?? new ClassMetadataFactory(new AttributeLoader());
 
         $this->serializerExtractor = new SerializerExtractor($this->classMetadataFactory);
         $this->phpDocExtractor = new PhpDocExtractor();

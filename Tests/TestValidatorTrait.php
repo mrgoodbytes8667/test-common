@@ -27,8 +27,7 @@ trait TestValidatorTrait
     protected function createValidator()
     {
         return Validation::createValidatorBuilder()
-            ->enableAnnotationMapping(true)
-            ->addDefaultDoctrineAnnotationReader()
+            ->enableAttributeMapping()
             ->getValidator();
     }
 
