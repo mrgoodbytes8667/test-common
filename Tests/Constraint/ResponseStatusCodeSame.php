@@ -12,7 +12,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 final class ResponseStatusCodeSame extends Constraint
 {
-    private $statusCode;
+    private readonly int $statusCode;
 
     public function __construct(int $statusCode)
     {

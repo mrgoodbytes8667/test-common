@@ -10,7 +10,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
  */
 final class ResponseContentSame extends Constraint
 {
-    private string $content;
+    private readonly string $content;
 
     public function __construct(string $content)
     {

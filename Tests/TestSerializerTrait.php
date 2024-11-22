@@ -60,6 +60,7 @@ trait TestSerializerTrait
         if (is_null($this->normalizers)) {
             $this->normalizers = new ArrayCollection();
         }
+
         if (empty($appendNormalizers)) {
             $appendNormalizers = [
                 new ProblemNormalizer(),
@@ -90,9 +91,11 @@ trait TestSerializerTrait
         if (is_null($this->normalizers)) {
             $this->normalizers = new ArrayCollection();
         }
+
         foreach ($prependNormalizers as $normalizer) {
             $this->addNormalizer($normalizer);
         }
+
         $this->setupObjectNormalizerParts();
 
         $objectNormalizer = new ObjectNormalizer(classMetadataFactory: $this->classMetadataFactory,
@@ -101,9 +104,11 @@ trait TestSerializerTrait
         if ($includeEnumNormalizer) {
             $this->addNormalizer(new EnumNormalizer());
         }
+
         foreach ($appendNormalizers as $normalizer) {
             $this->addNormalizer($normalizer);
         }
+
         if ($includeObjectNormalizer) {
             $this->addNormalizer($objectNormalizer);
         }
@@ -119,6 +124,7 @@ trait TestSerializerTrait
         if (is_null($this->normalizers)) {
             $this->normalizers = new ArrayCollection();
         }
+
         if (!$this->normalizers->containsKey($normalizer::class)) {
             $this->normalizers->set($normalizer::class, $normalizer);
         }
