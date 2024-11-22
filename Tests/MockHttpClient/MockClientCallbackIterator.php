@@ -1,14 +1,11 @@
 <?php
 
-
 namespace Bytes\Tests\Common\MockHttpClient;
-
 
 use Iterator;
 
 /**
- * Class MockClientCallbackIterator
- * @package Bytes\Tests\Common\MockHttpClient
+ * Class MockClientCallbackIterator.
  */
 abstract class MockClientCallbackIterator implements Iterator
 {
@@ -17,13 +14,11 @@ abstract class MockClientCallbackIterator implements Iterator
      */
     private $position = 0;
 
-    /**
-     * @var
-     */
     private $array;
 
     /**
      * MockClientCallbackIterator constructor.
+     *
      * @param null $array
      */
     public function __construct($array = null)
@@ -34,28 +29,34 @@ abstract class MockClientCallbackIterator implements Iterator
 
     /**
      * @param mixed $array
+     *
      * @return $this
      */
     public function setArray($array): static
     {
         $this->array = $array;
+
         return $this;
     }
 
     /**
      * @param mixed $value
+     *
      * @return $this
      */
     public function add($value): static
     {
         $this->array[] = $value;
+
         return $this;
     }
 
     /**
-     * Return the current element
-     * @link https://php.net/manual/en/iterator.current.php
-     * @return mixed Can return any type.
+     * Return the current element.
+     *
+     * @see https://php.net/manual/en/iterator.current.php
+     *
+     * @return mixed can return any type
      */
     public function current()
     {
@@ -63,9 +64,11 @@ abstract class MockClientCallbackIterator implements Iterator
     }
 
     /**
-     * Move forward to next element
-     * @link https://php.net/manual/en/iterator.next.php
-     * @return void Any returned value is ignored.
+     * Move forward to next element.
+     *
+     * @see https://php.net/manual/en/iterator.next.php
+     *
+     * @return void any returned value is ignored
      */
     public function next()
     {
@@ -73,9 +76,11 @@ abstract class MockClientCallbackIterator implements Iterator
     }
 
     /**
-     * Return the key of the current element
-     * @link https://php.net/manual/en/iterator.key.php
-     * @return string|float|int|bool|null scalar on success, or null on failure.
+     * Return the key of the current element.
+     *
+     * @see https://php.net/manual/en/iterator.key.php
+     *
+     * @return string|float|int|bool|null scalar on success, or null on failure
      */
     public function key()
     {
@@ -83,10 +88,12 @@ abstract class MockClientCallbackIterator implements Iterator
     }
 
     /**
-     * Checks if current position is valid
-     * @link https://php.net/manual/en/iterator.valid.php
+     * Checks if current position is valid.
+     *
+     * @see https://php.net/manual/en/iterator.valid.php
+     *
      * @return bool The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *              Returns true on success or false on failure.
      */
     public function valid()
     {
@@ -94,9 +101,11 @@ abstract class MockClientCallbackIterator implements Iterator
     }
 
     /**
-     * Rewind the Iterator to the first element
-     * @link https://php.net/manual/en/iterator.rewind.php
-     * @return void Any returned value is ignored.
+     * Rewind the Iterator to the first element.
+     *
+     * @see https://php.net/manual/en/iterator.rewind.php
+     *
+     * @return void any returned value is ignored
      */
     public function rewind()
     {

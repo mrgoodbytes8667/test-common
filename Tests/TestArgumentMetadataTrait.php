@@ -1,22 +1,13 @@
 <?php
 
-
 namespace Bytes\Tests\Common;
-
 
 use Symfony\Component\HttpKernel\ControllerMetadata\ArgumentMetadata;
 
-/**
- *
- */
 trait TestArgumentMetadataTrait
 {
     /**
      * @param class-string|null $class
-     * @param string|null $name
-     * @param bool $isVariadic
-     * @param array $attributes
-     * @return ArgumentMetadata
      */
     public function createArgumentMetadata(?string $class = null, ?string $name = null, bool $isVariadic = false, array $attributes = []): ArgumentMetadata
     {

@@ -1,28 +1,23 @@
 <?php
 
-
 namespace Bytes\Tests\Common\MockHttpClient;
-
 
 use Symfony\Component\HttpClient\Response\MockResponse as BaseMockResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class MockResponse
- * @package Bytes\Tests\Common\MockHttpClient
+ * Class MockResponse.
  */
 class MockResponse extends BaseMockResponse
 {
     /**
      * MockResponse constructor.
-     * Needs the $mockResponse argument or the environment variable BYTES_MOCK_RESPONSE_CLASS for rate limits
+     * Needs the $mockResponse argument or the environment variable BYTES_MOCK_RESPONSE_CLASS for rate limits.
      *
      * @param string|string[]|iterable $body The response body as a string or an iterable of strings,
      *                                       yielding an empty string simulates an idle timeout,
      *                                       exceptions are turned to TransportException
-     * @param int $code
-     * @param array $info = ResponseInterface::getInfo()
-     * @param MockResponseHeaderInterface|null $responseHeaderClass
+     * @param array                    $info = ResponseInterface::getInfo()
      *
      * @see ResponseInterface::getInfo() for possible info, e.g. "response_headers"
      */
@@ -30,9 +25,9 @@ class MockResponse extends BaseMockResponse
     {
         $info = self::normalizeInfo($info);
 
-        if(is_null($responseHeaderClass)) {
+        if (is_null($responseHeaderClass)) {
             $class = getenv('BYTES_MOCK_RESPONSE_CLASS');
-            if(!empty($class)) {
+            if (!empty($class)) {
                 $responseHeaderClass = new $class();
             }
         }
@@ -47,8 +42,8 @@ class MockResponse extends BaseMockResponse
     }
 
     /**
-     * Plug in response headers key if not exists
-     * @param array $info
+     * Plug in response headers key if not exists.
+     *
      * @return array
      */
     protected static function normalizeInfo(array $info = [])

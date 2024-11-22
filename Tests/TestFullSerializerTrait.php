@@ -2,12 +2,10 @@
 
 namespace Bytes\Tests\Common;
 
-
 use Symfony\Component\Serializer\SerializerInterface;
 
 /**
- * Trait TestFullSerializerTrait
- * @package Bytes\Tests\Common
+ * Trait TestFullSerializerTrait.
  */
 trait TestFullSerializerTrait
 {
