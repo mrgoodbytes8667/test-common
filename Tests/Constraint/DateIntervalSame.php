@@ -17,7 +17,7 @@ class DateIntervalSame extends Constraint
      */
     private $interval;
 
-    private bool $skipDays;
+    private readonly bool $skipDays;
 
     /**
      * DateIntervalSame constructor.
@@ -31,6 +31,7 @@ class DateIntervalSame extends Constraint
         } elseif (!($interval instanceof DateInterval)) {
             throw new InvalidArgumentException('Constructor requires a DateInterval or a DateInterval string spec.');
         }
+
         $this->interval = $interval;
         $this->skipDays = $skipDays;
     }
@@ -77,18 +78,23 @@ class DateIntervalSame extends Constraint
         if (0 !== $interval->y) {
             $format[] = '%y '.$this->pluralize($interval->y, 'year');
         }
+
         if (0 !== $interval->m) {
             $format[] = '%m '.$this->pluralize($interval->m, 'month');
         }
+
         if (0 !== $interval->d) {
             $format[] = '%d '.$this->pluralize($interval->d, 'day');
         }
+
         if (0 !== $interval->h) {
             $format[] = '%h '.$this->pluralize($interval->h, 'hour');
         }
+
         if (0 !== $interval->i) {
             $format[] = '%i '.$this->pluralize($interval->i, 'minute');
         }
+
         if (0 !== $interval->s) {
             if (!count($format)) {
                 return 'less than a minute ago';

@@ -20,10 +20,12 @@ trait TestArgumentMetadataTrait
             $config->method('getName')
                 ->willReturn($name);
         }
+
         if (null !== $class) {
             $config->method('getType')
                 ->willReturn($class);
         }
+
         $config->method('isVariadic')
             ->willReturn($isVariadic);
 

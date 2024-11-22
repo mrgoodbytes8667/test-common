@@ -23,7 +23,6 @@ abstract class MockClientCallbackIterator implements Iterator
      */
     public function __construct($array = null)
     {
-        $this->position = 0;
         $this->setArray($array ?? []);
     }
 

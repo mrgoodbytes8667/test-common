@@ -18,6 +18,7 @@ use Symfony\Component\HttpClient\Exception\ServerException;
 trait CommonResponseTrait
 {
     private $content;
+
     private $jsonData;
 
     public function toArray(bool $throw = true): array

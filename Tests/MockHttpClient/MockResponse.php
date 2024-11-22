@@ -31,6 +31,7 @@ class MockResponse extends BaseMockResponse
                 $responseHeaderClass = new $class();
             }
         }
+
         if (!is_null($responseHeaderClass) && $responseHeaderClass instanceof MockResponseHeaderInterface) {
             $info['response_headers'] = array_merge($responseHeaderClass->getRateLimitArray(), $info['response_headers']);
         }
@@ -38,6 +39,7 @@ class MockResponse extends BaseMockResponse
         if (!array_key_exists('http_code', $info)) {
             $info['http_code'] = $code;
         }
+
         parent::__construct($body, $info);
     }
 
