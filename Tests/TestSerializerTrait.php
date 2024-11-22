@@ -2,7 +2,6 @@
 
 namespace Bytes\Tests\Common;
 
-use Bytes\EnumSerializerBundle\Serializer\Normalizer\EnumNormalizer;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\PropertyInfo\PropertyTypeExtractorInterface;
 use Symfony\Component\Serializer\Encoder\CsvEncoder;
@@ -14,6 +13,7 @@ use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactoryInterface;
 use Symfony\Component\Serializer\NameConverter\MetadataAwareNameConverter;
 use Symfony\Component\Serializer\NameConverter\NameConverterInterface;
 use Symfony\Component\Serializer\Normalizer\ArrayDenormalizer;
+use Symfony\Component\Serializer\Normalizer\BackedEnumNormalizer;
 use Symfony\Component\Serializer\Normalizer\ConstraintViolationListNormalizer;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateIntervalNormalizer;
@@ -102,7 +102,7 @@ trait TestSerializerTrait
             nameConverter: $this->metadataAwareNameConverter, propertyAccessor: $this->propertyAccessor,
             propertyTypeExtractor: $this->propertyInfo, classDiscriminatorResolver: $this->classDiscriminatorFromClassMetadata);
         if ($includeEnumNormalizer) {
-            $this->addNormalizer(new EnumNormalizer());
+            $this->addNormalizer(new BackedEnumNormalizer());
         }
 
         foreach ($appendNormalizers as $normalizer) {
