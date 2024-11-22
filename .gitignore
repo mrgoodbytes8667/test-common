@@ -32,6 +32,15 @@ composer.lock
 bin/phpunit
 ###< symfony bundle
 
+###> friendsofphp/php-cs-fixer ###
+/.php-cs-fixer.php
+/.php-cs-fixer.cache
+###< friendsofphp/php-cs-fixer ###
+
+###> phpstan/phpstan ###
+phpstan.neon
+###< phpstan/phpstan ###
+
 ###> jetbrains
 .idea
 ###< jetbrains
