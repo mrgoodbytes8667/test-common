@@ -5,10 +5,9 @@ name: release
 on:
   push:
     tags:
-      - v*
-      - '!v*ALPHA*'
-      - '!v*BETA*'
-      - '!v*RC*'
+      - 'v*ALPHA*'
+      - 'v*BETA*'
+      - 'v*RC*'
   workflow_dispatch:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
@@ -30,4 +29,4 @@ jobs:
           tag_name: ${{ github.ref }}
           release_name: ${{ github.ref }}
           draft: true
-          prerelease: false
+          prerelease: true
