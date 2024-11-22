@@ -2,10 +2,8 @@
 
 namespace Bytes\Tests\Common;
 
-
 /**
- * Trait TestFullValidatorTrait
- * @package Bytes\Tests\Common
+ * Trait TestFullValidatorTrait.
  */
 trait TestFullValidatorTrait
 {

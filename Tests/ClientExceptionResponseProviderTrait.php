@@ -1,15 +1,12 @@
 <?php
 
-
 namespace Bytes\Tests\Common;
-
 
 use Generator;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Trait ClientExceptionResponseProviderTrait
- * @package Bytes\Tests\Common
+ * Trait ClientExceptionResponseProviderTrait.
  */
 trait ClientExceptionResponseProviderTrait
 {
@@ -26,7 +23,8 @@ trait ClientExceptionResponseProviderTrait
     /**
      * Purposefully not returning HTTP_LOCKED, HTTP_FAILED_DEPENDENCY, and HTTP_TOO_EARLY because they require additional
      * content/headers
-     * Not returning HTTP_TOO_MANY_REQUESTS because this framework expects certain headers and this is already tested
+     * Not returning HTTP_TOO_MANY_REQUESTS because this framework expects certain headers and this is already tested.
+     *
      * @return Generator
      */
     public function provide400Responses()

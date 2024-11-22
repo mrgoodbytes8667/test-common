@@ -6,12 +6,10 @@ use PHPUnit\Framework\Constraint\Constraint;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
- * Class ResponseContentSame
- * @package Bytes\Tests\Common\Constraint
+ * Class ResponseContentSame.
  */
 final class ResponseContentSame extends Constraint
 {
-
     private string $content;
 
     public function __construct(string $content)
@@ -19,9 +17,6 @@ final class ResponseContentSame extends Constraint
         $this->content = $content;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(): string
     {
         return sprintf('content is "%s"', $this->content);
@@ -29,8 +24,6 @@ final class ResponseContentSame extends Constraint
 
     /**
      * @param ResponseInterface $response
-     *
-     * {@inheritdoc}
      */
     protected function matches($response): bool
     {
@@ -39,8 +32,6 @@ final class ResponseContentSame extends Constraint
 
     /**
      * @param ResponseInterface $response
-     *
-     * {@inheritdoc}
      */
     protected function failureDescription($response): string
     {

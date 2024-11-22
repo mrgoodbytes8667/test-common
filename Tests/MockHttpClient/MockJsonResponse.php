@@ -10,9 +10,7 @@ class MockJsonResponse extends MockResponse
      * @param string|string[]|iterable $body The response body as a string or an iterable of strings,
      *                                       yielding an empty string simulates an idle timeout,
      *                                       exceptions are turned to TransportException
-     * @param int $code
-     * @param array $info = ResponseInterface::getInfo()
-     * @param MockResponseHeaderInterface|null $responseHeaderClass
+     * @param array                    $info = ResponseInterface::getInfo()
      *
      * @see ResponseInterface::getInfo() for possible info, e.g. "response_headers"
      */

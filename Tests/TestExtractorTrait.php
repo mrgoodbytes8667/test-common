@@ -18,38 +18,34 @@ trait TestExtractorTrait
     /**
      * @var ClassMetadataFactoryInterface
      */
-    protected $classMetadataFactory = null;
+    protected $classMetadataFactory;
 
     /**
      * @var SerializerExtractor
      */
-    protected $serializerExtractor = null;
+    protected $serializerExtractor;
 
     /**
      * @var PhpDocExtractor
      */
-    protected $phpDocExtractor = null;
+    protected $phpDocExtractor;
 
     /**
      * @var ReflectionExtractor
      */
-    protected $reflectionExtractor = null;
+    protected $reflectionExtractor;
 
     /**
      * @var PropertyTypeExtractorInterface
      */
-    protected $propertyInfo = null;
+    protected $propertyInfo;
 
     /**
      * @var PropertyAccessorInterface
      */
-    protected $propertyAccessor = null;
+    protected $propertyAccessor;
 
-    /**
-     * @param ClassMetadataFactoryInterface|null $classMetadataFactory
-     * @param PropertyTypeExtractorInterface|null $propertyTypeExtractor
-     */
-    protected function setupExtractorParts(ClassMetadataFactoryInterface $classMetadataFactory = null, PropertyTypeExtractorInterface $propertyTypeExtractor = null)
+    protected function setupExtractorParts(?ClassMetadataFactoryInterface $classMetadataFactory = null, ?PropertyTypeExtractorInterface $propertyTypeExtractor = null)
     {
         $this->classMetadataFactory = $classMetadataFactory ?? $this->classMetadataFactory ?? new ClassMetadataFactory(new AttributeLoader());
 
@@ -58,12 +54,12 @@ trait TestExtractorTrait
         $this->reflectionExtractor = new ReflectionExtractor();
 
         $this->propertyInfo = $propertyTypeExtractor ?? $this->propertyTypeExtractor ?? new PropertyInfoExtractor(
-                [$this->serializerExtractor, $this->reflectionExtractor],
-                [$this->phpDocExtractor, $this->reflectionExtractor],
-                [$this->phpDocExtractor],
-                [$this->reflectionExtractor],
-                [$this->reflectionExtractor]
-            );
+            [$this->serializerExtractor, $this->reflectionExtractor],
+            [$this->phpDocExtractor, $this->reflectionExtractor],
+            [$this->phpDocExtractor],
+            [$this->reflectionExtractor],
+            [$this->reflectionExtractor]
+        );
 
         $this->propertyAccessor = new PropertyAccessor();
     }

@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Bytes\Tests\Common\MockHttpClient;
-
 
 use Bytes\Tests\Common\CommonResponseTrait;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,8 +12,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Class MockStandaloneResponse
- * A helper similar to the MockResponse used with MockHttpClient, but doesn't require MockHttpClient
- * @package Bytes\DiscordBundle\Tests\MockHttpClient
+ * A helper similar to the MockResponse used with MockHttpClient, but doesn't require MockHttpClient.
  */
 class MockStandaloneResponse implements ResponseInterface
 {
@@ -38,13 +35,11 @@ class MockStandaloneResponse implements ResponseInterface
 
     /**
      * MockStandaloneResponse constructor.
+     *
      * @param null $content
-     * @param int $statusCode
-     * @param array $headers
      */
     public function __construct($content = null, int $statusCode = Response::HTTP_OK, array $headers = [])
     {
-
         $this->info = [
             'cancelled' => false,
             'error' => null,
@@ -53,7 +48,7 @@ class MockStandaloneResponse implements ResponseInterface
             'redirection_count' => 0,
             'redirect_url' => null,
             'response_headers' => [],
-            'start_time' => (float)1,
+            'start_time' => (float) 1,
             'url' => '',
             'user_data' => null,
         ];
@@ -151,11 +146,12 @@ class MockStandaloneResponse implements ResponseInterface
      * @return array|mixed|null An array of all available info, or one of them when $type is
      *                          provided, or null when an unsupported type is requested
      */
-    public function getInfo(string $type = null): mixed
+    public function getInfo(?string $type = null): mixed
     {
         if (!array_key_exists($type, $this->info)) {
             return null;
         }
+
         return $this->info[$type];
     }
 

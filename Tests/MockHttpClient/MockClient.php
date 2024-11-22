@@ -1,16 +1,13 @@
 <?php
 
-
 namespace Bytes\Tests\Common\MockHttpClient;
-
 
 use Illuminate\Support\Arr;
 use Symfony\Component\HttpClient\MockHttpClient;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * Class MockClient
- * @package Bytes\Tests\Common\MockHttpClient
+ * Class MockClient.
  */
 class MockClient
 {
@@ -24,17 +21,19 @@ class MockClient
 
     /**
      * @param mixed ...$responseFactory
+     *
      * @return MockHttpClient
      */
     public static function client(...$responseFactory)
     {
         // Flatten the array down by one layer if we're nested
-        if (count($responseFactory) == 1) {
+        if (1 == count($responseFactory)) {
             $first = Arr::first($responseFactory);
             if (is_array($first)) {
                 $responseFactory = $first;
             }
         }
+
         return new MockHttpClient($responseFactory);
     }
 
@@ -47,7 +46,6 @@ class MockClient
     }
 
     /**
-     * @param int $code
      * @return MockHttpClient
      */
     public static function emptyError(int $code)
@@ -57,6 +55,7 @@ class MockClient
 
     /**
      * @param mixed ...$requests
+     *
      * @return MockHttpClient
      */
     public static function requests(...$requests)

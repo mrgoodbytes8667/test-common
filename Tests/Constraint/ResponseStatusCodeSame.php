@@ -6,8 +6,7 @@ use PHPUnit\Framework\Constraint\Constraint;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
- * Class ResponseStatusCodeSame
- * @package Bytes\Tests\Common\Constraint
+ * Class ResponseStatusCodeSame.
  *
  * @see \Symfony\Component\HttpFoundation\Test\Constraint\ResponseStatusCodeSame
  */
@@ -20,9 +19,6 @@ final class ResponseStatusCodeSame extends Constraint
         $this->statusCode = $statusCode;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function toString(): string
     {
         return 'status code is '.$this->statusCode;
@@ -30,8 +26,6 @@ final class ResponseStatusCodeSame extends Constraint
 
     /**
      * @param ResponseInterface $response
-     *
-     * {@inheritdoc}
      */
     protected function matches($response): bool
     {
@@ -40,8 +34,6 @@ final class ResponseStatusCodeSame extends Constraint
 
     /**
      * @param ResponseInterface $response
-     *
-     * {@inheritdoc}
      */
     protected function failureDescription($response): string
     {

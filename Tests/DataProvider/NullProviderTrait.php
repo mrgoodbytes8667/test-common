@@ -4,9 +4,6 @@ namespace Bytes\Tests\Common\DataProvider;
 
 use Generator;
 
-/**
- *
- */
 trait NullProviderTrait
 {
     /**
